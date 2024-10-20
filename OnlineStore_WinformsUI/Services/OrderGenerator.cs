@@ -23,9 +23,9 @@ namespace OnlineStore_WinformsUI.Services
             List<Pizza> allPizzas = JsonConvert.DeserializeObject<List<Pizza>>(response) ?? throw new InvalidOperationException("Can't serialize all pizzas.");
             PizzaSize[] pizzaSizes = { PizzaSize.Small, PizzaSize.Medium, PizzaSize.Large };
 
-            using SemaphoreSlim semaphore = new SemaphoreSlim(30);
+            using SemaphoreSlim semaphore = new SemaphoreSlim(90);
 
-            const int MaxCountOfSimultaneousTasks = 30;
+            const int MaxCountOfSimultaneousTasks = 90;
             List<Task> tasks = new List<Task>();
 
             _progressBar.Maximum = orderCount;

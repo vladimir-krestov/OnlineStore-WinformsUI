@@ -32,6 +32,7 @@
         private void InitializeComponent()
         {
             mainPanel = new Panel();
+            cartButton = new Button();
             adminPageLabel = new Label();
             adminPageTabControl = new TabControl();
             usersTabPage = new TabPage();
@@ -42,7 +43,22 @@
             addressHeader = new ColumnHeader();
             usersErrorLabel = new Label();
             getAllUsersButton = new Button();
-            pizzaTabPage = new TabPage();
+            pizzasTabPage = new TabPage();
+            pizzasFlowLayoutPanel = new FlowLayoutPanel();
+            pizzaPanelItem = new Panel();
+            pizzaPanelPictureBox = new PictureBox();
+            pizzaPanelNumericUpDown = new NumericUpDown();
+            pizzaPanelPriceLabel = new Label();
+            pizzaPanelTitleLabel = new Label();
+            ordersTabPage = new TabPage();
+            ordersGenerationProgressBar = new ProgressBar();
+            generateOrdersButton = new Button();
+            ordersPageLabel = new Label();
+            orderPageNumericUpDown = new NumericUpDown();
+            ordersTreeView = new TreeView();
+            ordersErrorLabel = new Label();
+            getAllOrdersButton = new Button();
+            pizzaTabPageOld = new TabPage();
             pizzasErrorLabel = new Label();
             pizzasListView = new ListView();
             columnHeader1 = new ColumnHeader();
@@ -50,13 +66,6 @@
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
             getAllPizzasButton = new Button();
-            ordersTabPage = new TabPage();
-            generateOrdersButton = new Button();
-            ordersPageLabel = new Label();
-            orderPageNumericUpDown = new NumericUpDown();
-            ordersTreeView = new TreeView();
-            ordersErrorLabel = new Label();
-            getAllOrdersButton = new Button();
             loginPanel = new Panel();
             loginSmallPanel = new Panel();
             loginErrorLabel = new Label();
@@ -66,13 +75,17 @@
             passwordLabel = new Label();
             emailTextBox = new TextBox();
             emailLabel = new Label();
-            ordersGenerationProgressBar = new ProgressBar();
             mainPanel.SuspendLayout();
             adminPageTabControl.SuspendLayout();
             usersTabPage.SuspendLayout();
-            pizzaTabPage.SuspendLayout();
+            pizzasTabPage.SuspendLayout();
+            pizzasFlowLayoutPanel.SuspendLayout();
+            pizzaPanelItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pizzaPanelPictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pizzaPanelNumericUpDown).BeginInit();
             ordersTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)orderPageNumericUpDown).BeginInit();
+            pizzaTabPageOld.SuspendLayout();
             loginPanel.SuspendLayout();
             loginSmallPanel.SuspendLayout();
             SuspendLayout();
@@ -81,6 +94,7 @@
             // 
             mainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             mainPanel.BackColor = Color.Azure;
+            mainPanel.Controls.Add(cartButton);
             mainPanel.Controls.Add(adminPageLabel);
             mainPanel.Controls.Add(adminPageTabControl);
             mainPanel.Location = new Point(12, 12);
@@ -88,6 +102,17 @@
             mainPanel.Size = new Size(1258, 729);
             mainPanel.TabIndex = 0;
             mainPanel.Visible = false;
+            // 
+            // cartButton
+            // 
+            cartButton.BackColor = Color.LightSalmon;
+            cartButton.Location = new Point(1100, 14);
+            cartButton.Name = "cartButton";
+            cartButton.Size = new Size(135, 44);
+            cartButton.TabIndex = 4;
+            cartButton.Text = "My order | 0";
+            cartButton.UseVisualStyleBackColor = false;
+            cartButton.Click += cartButton_Click;
             // 
             // adminPageLabel
             // 
@@ -103,13 +128,15 @@
             // 
             adminPageTabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             adminPageTabControl.Controls.Add(usersTabPage);
-            adminPageTabControl.Controls.Add(pizzaTabPage);
+            adminPageTabControl.Controls.Add(pizzasTabPage);
             adminPageTabControl.Controls.Add(ordersTabPage);
+            adminPageTabControl.Controls.Add(pizzaTabPageOld);
             adminPageTabControl.Location = new Point(19, 64);
             adminPageTabControl.Name = "adminPageTabControl";
             adminPageTabControl.SelectedIndex = 0;
             adminPageTabControl.Size = new Size(1220, 647);
             adminPageTabControl.TabIndex = 2;
+            adminPageTabControl.SelectedIndexChanged += adminPageTabControl_SelectedIndexChanged;
             // 
             // usersTabPage
             // 
@@ -175,68 +202,72 @@
             getAllUsersButton.UseVisualStyleBackColor = true;
             getAllUsersButton.Click += getAllUsersButton_Click;
             // 
-            // pizzaTabPage
+            // pizzasTabPage
             // 
-            pizzaTabPage.Controls.Add(pizzasErrorLabel);
-            pizzaTabPage.Controls.Add(pizzasListView);
-            pizzaTabPage.Controls.Add(getAllPizzasButton);
-            pizzaTabPage.Location = new Point(4, 29);
-            pizzaTabPage.Name = "pizzaTabPage";
-            pizzaTabPage.Padding = new Padding(3);
-            pizzaTabPage.Size = new Size(1212, 614);
-            pizzaTabPage.TabIndex = 1;
-            pizzaTabPage.Text = "Pizzas";
-            pizzaTabPage.UseVisualStyleBackColor = true;
+            pizzasTabPage.Controls.Add(pizzasFlowLayoutPanel);
+            pizzasTabPage.Location = new Point(4, 29);
+            pizzasTabPage.Name = "pizzasTabPage";
+            pizzasTabPage.Size = new Size(1212, 614);
+            pizzasTabPage.TabIndex = 3;
+            pizzasTabPage.Text = "Pizzas";
+            pizzasTabPage.UseVisualStyleBackColor = true;
             // 
-            // pizzasErrorLabel
+            // pizzasFlowLayoutPanel
             // 
-            pizzasErrorLabel.AutoSize = true;
-            pizzasErrorLabel.Location = new Point(201, 23);
-            pizzasErrorLabel.Name = "pizzasErrorLabel";
-            pizzasErrorLabel.Size = new Size(79, 20);
-            pizzasErrorLabel.TabIndex = 3;
-            pizzasErrorLabel.Text = "Pizzas info";
-            pizzasErrorLabel.Visible = false;
+            pizzasFlowLayoutPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pizzasFlowLayoutPanel.AutoScroll = true;
+            pizzasFlowLayoutPanel.BackColor = SystemColors.Window;
+            pizzasFlowLayoutPanel.Controls.Add(pizzaPanelItem);
+            pizzasFlowLayoutPanel.Location = new Point(24, 24);
+            pizzasFlowLayoutPanel.Name = "pizzasFlowLayoutPanel";
+            pizzasFlowLayoutPanel.Size = new Size(1163, 569);
+            pizzasFlowLayoutPanel.TabIndex = 0;
             // 
-            // pizzasListView
+            // pizzaPanelItem
             // 
-            pizzasListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pizzasListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
-            pizzasListView.Location = new Point(24, 59);
-            pizzasListView.Name = "pizzasListView";
-            pizzasListView.Size = new Size(1165, 540);
-            pizzasListView.TabIndex = 1;
-            pizzasListView.UseCompatibleStateImageBehavior = false;
+            pizzaPanelItem.Controls.Add(pizzaPanelPictureBox);
+            pizzaPanelItem.Controls.Add(pizzaPanelNumericUpDown);
+            pizzaPanelItem.Controls.Add(pizzaPanelPriceLabel);
+            pizzaPanelItem.Controls.Add(pizzaPanelTitleLabel);
+            pizzaPanelItem.Location = new Point(3, 3);
+            pizzaPanelItem.Name = "pizzaPanelItem";
+            pizzaPanelItem.Size = new Size(285, 274);
+            pizzaPanelItem.TabIndex = 0;
             // 
-            // columnHeader1
+            // pizzaPanelPictureBox
             // 
-            columnHeader1.Text = "Email";
-            columnHeader1.Width = 250;
+            pizzaPanelPictureBox.Location = new Point(49, 9);
+            pizzaPanelPictureBox.Name = "pizzaPanelPictureBox";
+            pizzaPanelPictureBox.Size = new Size(190, 181);
+            pizzaPanelPictureBox.TabIndex = 1;
+            pizzaPanelPictureBox.TabStop = false;
             // 
-            // columnHeader2
+            // pizzaPanelNumericUpDown
             // 
-            columnHeader2.Text = "Name";
-            columnHeader2.Width = 150;
+            pizzaPanelNumericUpDown.Location = new Point(172, 229);
+            pizzaPanelNumericUpDown.Name = "pizzaPanelNumericUpDown";
+            pizzaPanelNumericUpDown.Size = new Size(67, 27);
+            pizzaPanelNumericUpDown.TabIndex = 1;
+            pizzaPanelNumericUpDown.ValueChanged += pizzaPanelNumericUpDown_ValueChanged;
             // 
-            // columnHeader3
+            // pizzaPanelPriceLabel
             // 
-            columnHeader3.Text = "Phone";
-            columnHeader3.Width = 150;
+            pizzaPanelPriceLabel.AutoSize = true;
+            pizzaPanelPriceLabel.Location = new Point(49, 231);
+            pizzaPanelPriceLabel.Name = "pizzaPanelPriceLabel";
+            pizzaPanelPriceLabel.Size = new Size(45, 20);
+            pizzaPanelPriceLabel.TabIndex = 1;
+            pizzaPanelPriceLabel.Text = "0 Rsd";
             // 
-            // columnHeader4
+            // pizzaPanelTitleLabel
             // 
-            columnHeader4.Text = "Address";
-            columnHeader4.Width = 150;
-            // 
-            // getAllPizzasButton
-            // 
-            getAllPizzasButton.Location = new Point(24, 16);
-            getAllPizzasButton.Name = "getAllPizzasButton";
-            getAllPizzasButton.Size = new Size(151, 34);
-            getAllPizzasButton.TabIndex = 2;
-            getAllPizzasButton.Text = "Get all pizzas";
-            getAllPizzasButton.UseVisualStyleBackColor = true;
-            getAllPizzasButton.Click += getAllPizzasButton_Click;
+            pizzaPanelTitleLabel.AutoSize = true;
+            pizzaPanelTitleLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            pizzaPanelTitleLabel.Location = new Point(120, 197);
+            pizzaPanelTitleLabel.Name = "pizzaPanelTitleLabel";
+            pizzaPanelTitleLabel.Size = new Size(40, 20);
+            pizzaPanelTitleLabel.TabIndex = 1;
+            pizzaPanelTitleLabel.Text = "Title";
             // 
             // ordersTabPage
             // 
@@ -253,6 +284,13 @@
             ordersTabPage.TabIndex = 2;
             ordersTabPage.Text = "Orders";
             ordersTabPage.UseVisualStyleBackColor = true;
+            // 
+            // ordersGenerationProgressBar
+            // 
+            ordersGenerationProgressBar.Location = new Point(760, 16);
+            ordersGenerationProgressBar.Name = "ordersGenerationProgressBar";
+            ordersGenerationProgressBar.Size = new Size(254, 34);
+            ordersGenerationProgressBar.TabIndex = 8;
             // 
             // generateOrdersButton
             // 
@@ -310,6 +348,69 @@
             getAllOrdersButton.Text = "Get all orders";
             getAllOrdersButton.UseVisualStyleBackColor = true;
             getAllOrdersButton.Click += getAllOrdersButton_Click;
+            // 
+            // pizzaTabPageOld
+            // 
+            pizzaTabPageOld.Controls.Add(pizzasErrorLabel);
+            pizzaTabPageOld.Controls.Add(pizzasListView);
+            pizzaTabPageOld.Controls.Add(getAllPizzasButton);
+            pizzaTabPageOld.Location = new Point(4, 29);
+            pizzaTabPageOld.Name = "pizzaTabPageOld";
+            pizzaTabPageOld.Padding = new Padding(3);
+            pizzaTabPageOld.Size = new Size(1212, 614);
+            pizzaTabPageOld.TabIndex = 1;
+            pizzaTabPageOld.Text = "PizzasOld";
+            pizzaTabPageOld.UseVisualStyleBackColor = true;
+            // 
+            // pizzasErrorLabel
+            // 
+            pizzasErrorLabel.AutoSize = true;
+            pizzasErrorLabel.Location = new Point(201, 23);
+            pizzasErrorLabel.Name = "pizzasErrorLabel";
+            pizzasErrorLabel.Size = new Size(79, 20);
+            pizzasErrorLabel.TabIndex = 3;
+            pizzasErrorLabel.Text = "Pizzas info";
+            pizzasErrorLabel.Visible = false;
+            // 
+            // pizzasListView
+            // 
+            pizzasListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pizzasListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+            pizzasListView.Location = new Point(24, 59);
+            pizzasListView.Name = "pizzasListView";
+            pizzasListView.Size = new Size(1165, 540);
+            pizzasListView.TabIndex = 1;
+            pizzasListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Email";
+            columnHeader1.Width = 250;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Name";
+            columnHeader2.Width = 150;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Phone";
+            columnHeader3.Width = 150;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Address";
+            columnHeader4.Width = 150;
+            // 
+            // getAllPizzasButton
+            // 
+            getAllPizzasButton.Location = new Point(24, 16);
+            getAllPizzasButton.Name = "getAllPizzasButton";
+            getAllPizzasButton.Size = new Size(151, 34);
+            getAllPizzasButton.TabIndex = 2;
+            getAllPizzasButton.Text = "Get all pizzas";
+            getAllPizzasButton.UseVisualStyleBackColor = true;
+            getAllPizzasButton.Click += getAllPizzasButton_Click;
             // 
             // loginPanel
             // 
@@ -406,13 +507,6 @@
             emailLabel.TabIndex = 1;
             emailLabel.Text = "Email";
             // 
-            // ordersGenerationProgressBar
-            // 
-            ordersGenerationProgressBar.Location = new Point(760, 16);
-            ordersGenerationProgressBar.Name = "ordersGenerationProgressBar";
-            ordersGenerationProgressBar.Size = new Size(254, 34);
-            ordersGenerationProgressBar.TabIndex = 8;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -430,11 +524,17 @@
             adminPageTabControl.ResumeLayout(false);
             usersTabPage.ResumeLayout(false);
             usersTabPage.PerformLayout();
-            pizzaTabPage.ResumeLayout(false);
-            pizzaTabPage.PerformLayout();
+            pizzasTabPage.ResumeLayout(false);
+            pizzasFlowLayoutPanel.ResumeLayout(false);
+            pizzaPanelItem.ResumeLayout(false);
+            pizzaPanelItem.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pizzaPanelPictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pizzaPanelNumericUpDown).EndInit();
             ordersTabPage.ResumeLayout(false);
             ordersTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)orderPageNumericUpDown).EndInit();
+            pizzaTabPageOld.ResumeLayout(false);
+            pizzaTabPageOld.PerformLayout();
             loginPanel.ResumeLayout(false);
             loginSmallPanel.ResumeLayout(false);
             loginSmallPanel.PerformLayout();
@@ -458,7 +558,7 @@
         private TabControl adminPageTabControl;
         private TabPage usersTabPage;
         private ListView usersListView;
-        private TabPage pizzaTabPage;
+        private TabPage pizzaTabPageOld;
         private TabPage ordersTabPage;
         private ColumnHeader emailHeader;
         private ColumnHeader nameHeader;
@@ -479,5 +579,13 @@
         private NumericUpDown orderPageNumericUpDown;
         private Button generateOrdersButton;
         private ProgressBar ordersGenerationProgressBar;
+        private Button cartButton;
+        private TabPage pizzasTabPage;
+        private FlowLayoutPanel pizzasFlowLayoutPanel;
+        private Panel pizzaPanelItem;
+        private PictureBox pizzaPanelPictureBox;
+        private NumericUpDown pizzaPanelNumericUpDown;
+        private Label pizzaPanelPriceLabel;
+        private Label pizzaPanelTitleLabel;
     }
 }
